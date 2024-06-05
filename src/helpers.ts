@@ -1,5 +1,6 @@
 import { Collection } from '@discordjs/collection';
 import { capitalCase } from 'change-case';
+import { randomInt } from 'node:crypto';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Permissions } from 'oceanic.js';
@@ -42,4 +43,13 @@ export const reviver = (key: string, value: any) => {
         if (value.dataType === 'Map') return new Collection(value.value);
     }
     return value;
-}
+};
+
+// prettier-ignore
+export function genDbId(length: 4 | 6 | 8 | 10 | 12) { switch (length) {
+    case 4: return randomInt(1111, 9999);
+    case 6: return randomInt(111111, 999999);
+    case 8: return randomInt(11111111, 99999999);
+    case 10: return randomInt(1111111111, 9999999999);
+    case 12: return randomInt(111111111111, 999999999999);
+}};
