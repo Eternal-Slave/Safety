@@ -5,6 +5,13 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
+"@discordjs/collection@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@discordjs/collection@npm:2.1.0"
+  checksum: 10c0/537df017962d4b98a35768db0d47e457a3f64daf550921368f98d3fbd66358d76f00ce01eac61163841b353747e702d1e1ea8badfdc2fb5a412eae7e84b1c607
+  languageName: node
+  linkType: hard
+
 "@discordjs/voice@npm:^0.16.1":
   version: 0.16.1
   resolution: "@discordjs/voice@npm:0.16.1"
@@ -270,6 +277,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"change-case@npm:^5.4.4":
+  version: 5.4.4
+  resolution: "change-case@npm:5.4.4"
+  checksum: 10c0/2a9c2b9c9ad6ab2491105aaf506db1a9acaf543a18967798dcce20926c6a173aa63266cb6189f3086e3c14bf7ae1f8ea4f96ecc466fcd582310efa00372f3734
+  languageName: node
+  linkType: hard
+
 "chokidar@npm:^3.5.3":
   version: 3.6.0
   resolution: "chokidar@npm:3.6.0"
@@ -341,6 +355,13 @@ __metadata:
     shebang-command: "npm:^2.0.0"
     which: "npm:^2.0.1"
   checksum: 10c0/5738c312387081c98d69c98e105b6327b069197f864a60593245d64c8089c8a0a744e16349281210d56835bb9274130d825a78b2ad6853ca13cfbeffc0c31750
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.11":
+  version: 1.11.11
+  resolution: "dayjs@npm:1.11.11"
+  checksum: 10c0/0131d10516b9945f05a57e13f4af49a6814de5573a494824e103131a3bbe4cc470b1aefe8e17e51f9a478a22cd116084be1ee5725cedb66ec4c3f9091202dc4b
   languageName: node
   linkType: hard
 
@@ -434,7 +455,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "es-safety@workspace:."
   dependencies:
+    "@discordjs/collection": "npm:^2.1.0"
     "@types/node": "npm:^20.14.1"
+    change-case: "npm:^5.4.4"
+    dayjs: "npm:^1.11.11"
     dotenv: "npm:^16.4.5"
     ioredis: "npm:^5.4.1"
     mongoose: "npm:^8.4.1"

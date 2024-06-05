@@ -13,6 +13,9 @@
 		"typescript": "^5.4.5"
 	},
 	"dependencies": {
+		"@discordjs/collection": "^2.1.0",
+		"change-case": "^5.4.4",
+		"dayjs": "^1.11.11",
 		"dotenv": "^16.4.5",
 		"ioredis": "^5.4.1",
 		"mongoose": "^8.4.1",
