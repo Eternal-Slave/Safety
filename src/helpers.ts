@@ -5,10 +5,10 @@ import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Permissions } from 'oceanic.js';
 import { SafetyProfileI } from './types';
-import { redis } from './app';
 import SafetyProfile from './models/SafetyProfile';
 import dayjs from 'dayjs';
 import { UpdateQuery } from 'mongoose';
+import Redis from 'ioredis';
 
 export const defaultPerms: bigint[] = [
     Permissions.EMBED_LINKS,
@@ -16,6 +16,7 @@ export const defaultPerms: bigint[] = [
     Permissions.USE_EXTERNAL_EMOJIS
 ];
 
+export const redis = new Redis(process.env.REDIS_URL!);
 export const sanitize = (string: string) => string.replaceAll('_', '\_');
 export const getDir = (path: string): string => dirname(fileURLToPath(path));
 export const getPermNames = (perms: bigint[]) => perms.map((perm) => capitalCase(Object.entries(Permissions).filter((v) => v[1] === BigInt(perm))[0][0])).join(', ');
@@ -59,12 +60,11 @@ export function genDbId(length: 4 | 6 | 8 | 10 | 12) { switch (length) {
     case 12: return randomInt(111111111111, 999999999999);
 }};
 
-type OptionalProfile<T extends boolean> = T extends true ? SafetyProfileI : SafetyProfileI | null;
-export const getProfile = async <T extends boolean = false>(userId: string, fetch?: T): Promise<OptionalProfile<T>> => {
+export const getProfile = async <T extends boolean = false>(userId: string, fetch?: T): Promise<SafetyProfileI | null> => {
     const redisProfile = await redis.get(`es_safety:${userId}`);
-    const cachedProfile: OptionalProfile<T> = redisProfile ? JSON.parse(redisProfile, reviver) : null;
+    const cachedProfile: SafetyProfileI | null = redisProfile ? JSON.parse(redisProfile, reviver) : null;
     if (cachedProfile) return cachedProfile;
-    if (await redis.exists(`es_cooldown_hold:fetch-safety:${userId}`)) return null as OptionalProfile<T>;
+    if (!fetch || await redis.exists(`es_cooldown_hold:fetch-safety:${userId}`)) return null;
     const dbProfile = await SafetyProfile.findById(userId);
 
     if (dbProfile) {
@@ -72,10 +72,7 @@ export const getProfile = async <T extends boolean = false>(userId: string, fetc
         return dbProfile.toObject();
     } else await redis.set(`es_cooldown_hold:fetch-safety:${userId}`, dayjs.utc().toISOString());
 
-    if (!fetch) return null as OptionalProfile<T>;
-    const newProfile = await SafetyProfile.create({ _id: userId });
-    await redis.set(`es_safety:${userId}`, JSON.stringify(newProfile.toObject(), replacer));
-    return newProfile.toObject();
+    return null;
 };
 
 export const updateProfile = async (userId: string, query: UpdateQuery<SafetyProfileI>) => {
@@ -84,6 +81,7 @@ export const updateProfile = async (userId: string, query: UpdateQuery<SafetyPro
         .then(async () => await SafetyProfile.findByIdAndUpdate(userId, query, { new: true }));
     
     if (!profile) throw new Error('The specified safety profile does not exist.');
+    if (profile.flags.size < 1 && profile.restrictions.size < 1) return profile.toObject();
     await redis.set(`es_safety:${userId}`, JSON.stringify(profile.toObject(), replacer));
     return profile.toObject();
 };

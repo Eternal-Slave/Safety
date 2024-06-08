@@ -2,8 +2,9 @@ import { getDir, replacer } from '@/helpers';
 import Command, { CmdInfo } from '@/interfaces/Command';
 import { readdirSync } from 'node:fs';
 import { snakeCase } from 'change-case';
+
 const commands = new Map<string, CmdInfo>();
-const path = `${getDir(import.meta.url)}/interactions/commands`;
+const path = `${getDir(import.meta.url)}/src/interactions/commands`;
 
 readdirSync(path).filter((f) => f.endsWith('.js')).forEach(async (command) => {
     const { info }: Command = await import(`${path}/${command}`);
