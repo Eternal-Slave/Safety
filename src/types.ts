@@ -21,9 +21,10 @@ export enum OptType {
 export { GuildI } from '@/models/Guild';
 export { SafetyProfileI } from '@/models/SafetyProfile';
 export { ChatCmdRun, CmdInfo, CmdAutoRun } from '@/interfaces/Command';
-export { IntType, ModalRun, IntInfo, ButtonRun, StrSelectRun, Interaction } from '@/interfaces/Interaction';
+export { IntType, ModalRun, IntInfo, ButtonRun, StrSelectRun, Interaction, RoleSelectRun, ChSelectRun } from '@/interfaces/Interaction';
 
 export type ButtonInteraction = ComponentInteraction<ComponentTypes.BUTTON>;
+export type RoleSelectMenuInteraction = ComponentInteraction<ComponentTypes.ROLE_SELECT>;
 export type StringSelectMenuInteraction = ComponentInteraction<ComponentTypes.STRING_SELECT>;
 export type ChannelSelectMenuInteraction = ComponentInteraction<ComponentTypes.CHANNEL_SELECT>;
 export type ChatInputCommandInteraction = CommandInteraction<AnyInteractionChannel | Uncached, ApplicationCommandTypes.CHAT_INPUT>;
