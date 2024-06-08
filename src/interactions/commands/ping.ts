@@ -22,5 +22,7 @@ export const run: ChatCmdRun = async (client, interaction) => {
 
 export const info: CmdInfo = {
     name: 'ping',
+    contexts: [0, 1, 2],
+    integrationTypes: [0, 1],
     description: '🏓 Pong! View my ping.'
 };

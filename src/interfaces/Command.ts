@@ -20,8 +20,10 @@ interface Choice {
 type InfoBase = {
 	name: string;
 	cooldown?: number;
+	contexts: number[];
 	options?: Options[];
 	permissions?: bigint[];
+	integrationTypes: number[];
 	defaultMemberPermissions?: bigint;
 };
 
