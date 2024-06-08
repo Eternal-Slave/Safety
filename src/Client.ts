@@ -1,9 +1,12 @@
 import { Collection } from '@discordjs/collection';
-import { Member, Client as OceanicClient, User } from 'oceanic.js';
+import { Member, Message, Client as OceanicClient, User } from 'oceanic.js';
 import Command from './interfaces/Command';
+import { Interaction } from './types';
 
 export default class Client extends OceanicClient {
+    public ready = false;
     public commands = new Collection<string, Command>();
+    public interactions = new Collection<string, Interaction>();
 
     public staff = new Collection<string, number>([
         ['738746238874419220', 9], ['179044026077544448', 8],

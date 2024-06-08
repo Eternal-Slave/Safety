@@ -12,6 +12,7 @@ import timezone from 'dayjs/plugin/timezone.js';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import updateLocale from 'dayjs/plugin/updateLocale.js';
 import advancedFormat from 'dayjs/plugin/advancedFormat.js';
+import { Interaction } from './types';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -28,7 +29,7 @@ const client = new Client({
     collectionLimits: { auditLogEntries: 0, stickers: 0, integrations: 0, groupChannels: 0, scheduledEvents: 0, autoModerationRules: 0 }
 });
 
-// const interactionPath = `${getDir(import.meta.url)}/interactions`;
+const interactionPath = `${getDir(import.meta.url)}/interactions`;
 const commandPath = `${getDir(import.meta.url)}/interactions/commands`;
 
 // prettier-ignore
@@ -38,12 +39,12 @@ readdirSync(commandPath).filter((f) => f.endsWith('.js')).forEach(async (cmd) =>
 });
 
 // prettier-ignore
-// for (const dir of readdirSync(interactionPath).filter((d) => d !== 'commands')) {
-    // for (const int of readdirSync(join(interactionPath, dir)).filter((f) => f.endsWith('.js'))) {
-        // const interaction: Interaction = await import(join(interactionPath, dir, int));
-        // client.interactions.set(interaction.info.id, interaction);
-    // };
-// };
+for (const dir of readdirSync(interactionPath).filter((d) => d !== 'commands')) {
+    for (const int of readdirSync(`${interactionPath}/${dir}`).filter((f) => f.endsWith('.js'))) {
+        const interaction: Interaction = await import(`${interactionPath}/${dir}/${int}`);
+        client.interactions.set(interaction.info.id, interaction);
+    };
+};
 
 await connect(process.env.MONGO_URL!, { dbName: process.argv.includes('--dev') ? 'dev' : 'bot' }).then(() => {})
 .catch(() => console.error('Connection to MongoDB failed! Please check the MONGO_URL env variable.'));
@@ -58,9 +59,9 @@ const handleError = async (error: Error|string) => {
     const wh = parseWebhookURL(process.env.ERROR_WEBHOOK!);
     if (!wh) return;
     let txt = '';
-    if (typeof error === 'string') txt = error;
+    if (typeof error === 'string') txt = `**[Safety]** ${error}`;
     if (error instanceof Error) {
-        txt = `[${error.name}]: ${error.message}`;
+        txt = `**[Safety]** [${error.name}]: ${error.message}`;
         if (error.cause) txt = txt + `\n\n\`${error.cause}\``;
         if (error.stack) txt = txt + `\n\n\`\`\`txt\n${error.stack}\n\`\`\``;
     };

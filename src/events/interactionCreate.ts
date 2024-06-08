@@ -1,7 +1,7 @@
 import Client from '@/Client';
 import { emojis } from '@/config';
 import { defaultPerms, getPermNames, redis, truncateString } from '@/helpers';
-import { Flags } from '@/types';
+import { Flags, IntType } from '@/types';
 import dayjs from 'dayjs';
 import { AnyInteractionGateway, CommandInteraction, ComponentInteraction, TextableChannel } from 'oceanic.js';
 
@@ -24,9 +24,23 @@ export const checkPerms = async (client: Client, interaction: CommandInteraction
 };
 
 export default async (client: Client, interaction: AnyInteractionGateway) => {
+    if (!client.ready) return;
+
     if (interaction.isAutocompleteInteraction()) {
         const cmd = client.commands.get(interaction.data.name);
         if (cmd?.autoRun) cmd.autoRun(client, interaction);
+    };
+
+    if (interaction.isComponentInteraction()) {
+        const int = client.interactions.find((int) => interaction.data.customID.includes(int.info.id))
+        if (!int) return;
+
+        if (isInstalled(interaction)) {
+            const error = await checkPerms(client, interaction, defaultPerms, int.info.permissions);
+            if (error) return interaction.reply({ content: error });
+        };
+
+        int.run(client, interaction);
     };
 
     if (interaction.isCommandInteraction() && interaction.isChatInputCommand()) {

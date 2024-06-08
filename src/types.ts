@@ -18,9 +18,10 @@ export enum OptType {
     Attachment
 };
 
+export { GuildI } from '@/models/Guild';
 export { SafetyProfileI } from '@/models/SafetyProfile';
 export { ChatCmdRun, CmdInfo, CmdAutoRun } from '@/interfaces/Command';
-// export { IntType, ModalRun, IntInfo, ButtonRun, StrSelectRun, Interaction } from '@/interfaces/Interaction';
+export { IntType, ModalRun, IntInfo, ButtonRun, StrSelectRun, Interaction } from '@/interfaces/Interaction';
 
 export type ButtonInteraction = ComponentInteraction<ComponentTypes.BUTTON>;
 export type StringSelectMenuInteraction = ComponentInteraction<ComponentTypes.STRING_SELECT>;

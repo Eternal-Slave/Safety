@@ -19,6 +19,7 @@ interface StaffCache {
 }
 
 export default async (client: Client) => {
+    client.ready = true;
     console.log(`[MANAGER] ${client.user.tag} has successfully started.`);
 
     const formatter = new Intl.NumberFormat('en', { notation: 'compact' });
