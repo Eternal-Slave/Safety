@@ -1,17 +1,17 @@
 import { connect } from 'mongoose';
 import Client from './Client';
-import { parseWebhookURL, truncateString } from './helpers';
-import Redis from 'ioredis';
+import { getDir, parseWebhookURL, redis, truncateString } from './helpers';
 import dayjs from 'dayjs';
+import interactionCreate from './events/interactionCreate';
+import clientReady from './events/clientReady';
+import { readdirSync } from 'node:fs';
+import Command from './interfaces/Command';
 
 import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import updateLocale from 'dayjs/plugin/updateLocale.js';
 import advancedFormat from 'dayjs/plugin/advancedFormat.js';
-import interactionCreate from './events/interactionCreate';
-import clientReady from './events/clientReady';
-import handler from './handler';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -28,8 +28,23 @@ const client = new Client({
     collectionLimits: { auditLogEntries: 0, stickers: 0, integrations: 0, groupChannels: 0, scheduledEvents: 0, autoModerationRules: 0 }
 });
 
-await handler(client);
-export const redis = new Redis(process.env.REDIS_URL!);
+// const interactionPath = `${getDir(import.meta.url)}/interactions`;
+const commandPath = `${getDir(import.meta.url)}/src/interactions/commands`;
+
+// prettier-ignore
+readdirSync(commandPath).filter((f) => f.endsWith('.js')).forEach(async (cmd) => {
+    const command: Command = await import(`${commandPath}/${cmd}`);
+    client.commands.set(command.info.name, command);
+});
+
+// prettier-ignore
+// for (const dir of readdirSync(interactionPath).filter((d) => d !== 'commands')) {
+    // for (const int of readdirSync(join(interactionPath, dir)).filter((f) => f.endsWith('.js'))) {
+        // const interaction: Interaction = await import(join(interactionPath, dir, int));
+        // client.interactions.set(interaction.info.id, interaction);
+    // };
+// };
+
 await connect(process.env.MONGO_URL!, { dbName: process.argv.includes('--dev') ? 'dev' : 'bot' }).then(() => {})
 .catch(() => console.error('Connection to MongoDB failed! Please check the MONGO_URL env variable.'));
 
