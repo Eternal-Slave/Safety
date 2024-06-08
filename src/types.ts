@@ -18,8 +18,7 @@ export enum OptType {
     Attachment
 };
 
-// export { GuildI } from '@/models/Guild';
-// export { ProfileI } from '@/models/Profile';
+export { SafetyProfileI } from '@/models/SafetyProfile';
 export { ChatCmdRun, CmdInfo, CmdAutoRun } from '@/interfaces/Command';
 // export { IntType, ModalRun, IntInfo, ButtonRun, StrSelectRun, Interaction } from '@/interfaces/Interaction';
 
