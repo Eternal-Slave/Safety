@@ -1,6 +1,6 @@
 import { connect } from 'mongoose';
 import Client from './Client';
-import { getDir, parseWebhookURL, redis, truncateString } from './helpers';
+import { getDir, parseWebhookURL, truncateString } from './helpers';
 import dayjs from 'dayjs';
 import interactionCreate from './events/interactionCreate';
 import clientReady from './events/clientReady';
@@ -13,6 +13,7 @@ import relativeTime from 'dayjs/plugin/relativeTime.js';
 import updateLocale from 'dayjs/plugin/updateLocale.js';
 import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 import { Interaction } from './types';
+import { redis } from './store';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);

@@ -1,7 +1,8 @@
-import { getDir, replacer } from '@/helpers';
+import { getDir } from '@/helpers';
 import Command, { CmdInfo } from '@/interfaces/Command';
 import { readdirSync } from 'node:fs';
 import { snakeCase } from 'change-case';
+import { replacer } from '@/store';
 
 const commands = new Map<string, CmdInfo>();
 const path = `${getDir(import.meta.url)}/src/interactions/commands`;
