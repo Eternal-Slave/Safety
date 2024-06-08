@@ -1,4 +1,4 @@
-import { sanitize, truncateString } from '@/helpers';
+import { redis, sanitize, truncateString } from '@/helpers';
 import { Embed, EmbedField, EmbedImage } from 'oceanic.js';
 
 export interface EmbedData {
@@ -24,6 +24,11 @@ export interface EmbedData {
 export default async (data: EmbedData, guildId?: string|null): Promise<Embed> => {
     let color = 0xfaff6d;
     let description = '';
+
+    if (guildId) {
+        const config = await redis.exists(`es_guild:${guildId}`) ? JSON.parse((await redis.get(`es_guild:${guildId}`))!) : null;
+        if (config?.color) color = config.color;
+    };
 
     if (typeof data.color === 'number') color = data.color;
     if (typeof data.color === 'string') color = parseInt(data.color.replace('#', '0x'));
