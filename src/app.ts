@@ -29,7 +29,7 @@ const client = new Client({
 });
 
 // const interactionPath = `${getDir(import.meta.url)}/interactions`;
-const commandPath = `${getDir(import.meta.url)}/src/interactions/commands`;
+const commandPath = `${getDir(import.meta.url)}/interactions/commands`;
 
 // prettier-ignore
 readdirSync(commandPath).filter((f) => f.endsWith('.js')).forEach(async (cmd) => {

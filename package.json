@@ -24,7 +24,7 @@
 	"scripts": {
 		"build": "rm -r build/; tsc; tsc-alias",
 		"dev": "yarn run build; yarn run start --dev",
-		"start": "node -r dotenv/config build/app.js",
+		"start": "node -r dotenv/config build/src/app.js",
 		"publish": "yarn run build; node -r dotenv/config build/publish.js --dev"
 	}
 }

@@ -20,7 +20,7 @@ const restrictionOrFlag = {
     _id: false,
     reason: { required: true, type: String },
     issuedAt: { required: true, type: Date },
-    issuedBy: { required: true, type: Date },
+    issuedBy: { required: true, type: String },
     authority: { required: true, type: String },
     evidence: { required: true, type: [String] }
 };
