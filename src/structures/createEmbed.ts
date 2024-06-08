@@ -1,4 +1,5 @@
-import { redis, sanitize, truncateString } from '@/helpers';
+import { sanitize, truncateString } from '@/helpers';
+import { redis } from '@/store';
 import { Embed, EmbedField, EmbedImage } from 'oceanic.js';
 
 export interface EmbedData {

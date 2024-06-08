@@ -1,4 +1,4 @@
-import {ButtonStyles, ComponentTypes, MessageActionRow, StringSelectMenu, TextButton, URLButton} from "oceanic.js";
+import {ButtonStyles, ComponentTypes, MessageActionRow, MessageComponent, StringSelectMenu, TextButton, URLButton} from "oceanic.js";
 
 interface BtnBaseData {
 	id?: string;
@@ -34,4 +34,9 @@ export const stringSelectRow = (data: Omit<StringSelectMenu, 'type'>[]): Message
         ...select,
         type: ComponentTypes.STRING_SELECT
     }))
+});
+
+export const selectRow = (data: MessageComponent[]): MessageActionRow => ({
+	type: ComponentTypes.ACTION_ROW,
+	components: data
 });
