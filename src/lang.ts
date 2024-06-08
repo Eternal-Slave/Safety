@@ -17,5 +17,6 @@ export default (client: Client, key: LangKeys, custom?: string): string => {
 };
 
 const strings = {
+    noManagePerms: "You don't have permission to manage {custom}.",
     unregistered: "{custom}'s configuration was not found. Please use {guildctl} with Eternal Slave."
 };

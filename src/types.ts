@@ -25,4 +25,5 @@ export { IntType, ModalRun, IntInfo, ButtonRun, StrSelectRun, Interaction } from
 
 export type ButtonInteraction = ComponentInteraction<ComponentTypes.BUTTON>;
 export type StringSelectMenuInteraction = ComponentInteraction<ComponentTypes.STRING_SELECT>;
+export type ChannelSelectMenuInteraction = ComponentInteraction<ComponentTypes.CHANNEL_SELECT>;
 export type ChatInputCommandInteraction = CommandInteraction<AnyInteractionChannel | Uncached, ApplicationCommandTypes.CHAT_INPUT>;
