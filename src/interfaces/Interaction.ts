@@ -1,11 +1,12 @@
 import Client from '@/Client';
-import { ButtonInteraction, StringSelectMenuInteraction } from '@/types';
-import { ComponentInteraction, ComponentTypes, ModalSubmitInteraction, User } from 'oceanic.js';
+import { ButtonInteraction, ChannelSelectMenuInteraction, StringSelectMenuInteraction } from '@/types';
+import { ComponentInteraction, ComponentTypes, ModalSubmitInteraction } from 'oceanic.js';
 
 export enum IntType {
     Modal = 1,
     Button = 2,
-    StrSelect = 3
+    StrSelect = 3,
+    ChSelect = 4
 };
 
 export interface Interaction {
@@ -18,6 +19,10 @@ export interface IntInfo {
     type: IntType;
 	permissions?: bigint[];
     authorization?: { brand?: true };
+}
+
+export interface ChSelectRun {
+    (client: Client, interaction: ChannelSelectMenuInteraction): void;
 }
 
 export interface StrSelectRun {

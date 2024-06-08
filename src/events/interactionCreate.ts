@@ -1,7 +1,7 @@
 import Client from '@/Client';
 import { emojis } from '@/config';
 import { defaultPerms, getPermNames, redis, truncateString } from '@/helpers';
-import { Flags, IntType } from '@/types';
+import { Flags } from '@/types';
 import dayjs from 'dayjs';
 import { AnyInteractionGateway, CommandInteraction, ComponentInteraction, TextableChannel } from 'oceanic.js';
 

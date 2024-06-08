@@ -2,11 +2,13 @@ import { Collection } from '@discordjs/collection';
 import { Member, Message, Client as OceanicClient, User } from 'oceanic.js';
 import Command from './interfaces/Command';
 import { Interaction } from './types';
+import lang, { LangKeys } from './lang';
 
 export default class Client extends OceanicClient {
     public ready = false;
     public commands = new Collection<string, Command>();
     public interactions = new Collection<string, Interaction>();
+    public replies = (key: LangKeys, custom?: string) => lang(this, key, custom);
 
     public staff = new Collection<string, number>([
         ['738746238874419220', 9], ['179044026077544448', 8],
