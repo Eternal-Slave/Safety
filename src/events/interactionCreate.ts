@@ -1,7 +1,6 @@
 import Client from '@/Client';
-import { redis } from '@/app';
-import { defaultPerms, getPermNames, truncateString } from '@/helpers';
-import { emojis } from '@/library/assets';
+import { emojis } from '@/config';
+import { defaultPerms, getPermNames, redis, truncateString } from '@/helpers';
 import { Flags } from '@/types';
 import dayjs from 'dayjs';
 import { AnyInteractionGateway, CommandInteraction, ComponentInteraction, TextableChannel } from 'oceanic.js';

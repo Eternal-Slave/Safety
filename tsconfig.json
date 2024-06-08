@@ -12,7 +12,8 @@
         "removeComments": true,
         "esModuleInterop": true,
         "moduleResolution": "Node",
-        "paths": { "@/*": ["./src/*"] }
+        "paths": { "@/*": ["./src/*"] },
+        "allowSyntheticDefaultImports": true
     },
     "exclude": ["build"]
 }

@@ -1,6 +1,5 @@
 import Client from '@/Client';
-import { redis } from '@/app';
-import { replacer } from '@/helpers';
+import { redis, replacer } from '@/helpers';
 import { ActivityTypes, SendStatuses } from 'oceanic.js';
 
 interface Presence {
