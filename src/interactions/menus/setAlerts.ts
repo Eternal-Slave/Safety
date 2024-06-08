@@ -1,7 +1,6 @@
 import { emojis } from '@/config';
-import { getGuild, updateGuild } from '@/helpers';
-import { ChSelectRun } from '@/interfaces/Interaction';
-import { Flags, IntInfo, IntType } from '@/types';
+import { getGuild, updateGuild } from '@/store';
+import { ChSelectRun, Flags, IntInfo, IntType } from '@/types';
 import { ChannelTypes, Permissions } from 'oceanic.js';
 import { genConfigContent } from '../commands/config';
 
@@ -11,7 +10,7 @@ export const run: ChSelectRun = async (client, interaction) => {
 
     let guild = await getGuild(interaction.guildID!);
     if (!guild) return await interaction.editParent({ content: client.replies('unregistered', interaction.guild?.name), components: [] });
-    await interaction.editParent({ content: `${emojis.loading} Updating alerts channel...`, components: [] });
+    await interaction.editParent({ content: `${emojis.loading} Updating safety alerts channel...`, components: [] });
 
     const channelId = interaction.data.values.getChannels(true)[0].id;
     const channel = interaction.guild?.channels.get(channelId);
