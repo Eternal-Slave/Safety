@@ -4,11 +4,12 @@ import { randomInt } from 'node:crypto';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Permissions } from 'oceanic.js';
-import { SafetyProfileI } from './types';
+import { GuildI, SafetyProfileI } from './types';
 import SafetyProfile from './models/SafetyProfile';
 import dayjs from 'dayjs';
 import { UpdateQuery } from 'mongoose';
 import Redis from 'ioredis';
+import Guild from './models/Guild';
 
 export const defaultPerms: bigint[] = [
     Permissions.EMBED_LINKS,
@@ -84,4 +85,25 @@ export const updateProfile = async (userId: string, query: UpdateQuery<SafetyPro
     if (profile.flags.size < 1 && profile.restrictions.size < 1) return profile.toObject();
     await redis.set(`es_safety:${userId}`, JSON.stringify(profile.toObject(), replacer));
     return profile.toObject();
+};
+
+export const updateGuild = async (guildId: string, query: UpdateQuery<GuildI>) => {
+    const guild = await Guild.findOneAndUpdate({ guild: guildId }, query, { new: true });
+    if (!guild) throw new Error('The specified guild does not exist.');
+    await redis.set(`es_guild:${guildId}`, JSON.stringify(guild.toObject(), replacer));
+    return guild.toObject();
+};
+
+export const getGuild = async <X extends boolean = false>(guildId: string, fetch?: X): Promise<GuildI | null> => {
+    const cachedGuild = await redis.get(`es_guild:${guildId}`);
+    if (cachedGuild) return JSON.parse(cachedGuild, reviver);
+    if (!fetch || await redis.exists(`es_cooldown:fetch-guild:${guildId}`)) return null;
+    const dbGuild = await Guild.findOne({ guild: guildId });
+
+    if (dbGuild) {
+        await redis.set(`es_guild:${guildId}`, JSON.stringify(dbGuild.toObject(), replacer));
+        return dbGuild.toObject();
+    } else await redis.set(`es_cooldown:fetch-guild:${guildId}`, dayjs.utc().toISOString());
+
+    return null;
 };
