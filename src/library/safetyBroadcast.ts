@@ -30,7 +30,7 @@ export default async (client: Client, interaction: ChatInputCommandInteraction, 
         title: `User ${info.type === 'flag' ? 'Flag' : 'Restriction'} ${revoke ? 'Removed' : 'Added'}`
     });
 
-    const subscriptionsRaw = await redis.smembers(`es_safety_subscriptions`);
+    const subscriptionsRaw = await redis.smembers(`es_config:safety_subscriptions`);
     // prettier-ignore
     let subscriptions = await Promise.all(subscriptionsRaw.map((sub) => new Promise<GuildI>(async (resolve) => resolve((await getGuild(sub))!))));
     subscriptions = subscriptions.filter((s) => s.safety.subscriptions.includes(info.id) && client.guilds.has(s.guild));

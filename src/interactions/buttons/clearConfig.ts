@@ -17,7 +17,7 @@ export const run: ButtonRun = async (client, interaction) => {
     const { int, success } = await confirmPrompt(interaction, lines.join(''), { time: 60000, noEdit: true });
     if (!success) return int.editParent({ content: `${emojis.cancel} Okay, safety config clear cancelled.`, components: [] });
 
-    await redis.srem(`es_safety_subscriptions`, interaction.guildID!);
+    await redis.srem(`es_config:safety_subscriptions`, interaction.guildID!);
     const guild = await updateGuild(interaction.guildID!, {
         $unset: { 'safety.alerts': '' },
         $set: { 'safety.autoBan': false, 'safety.mentions': [], 'safety.subscriptions': [] }
