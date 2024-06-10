@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-interface RestrictionOrFlag {
+export interface RestrictionOrFlag {
     reason: string;
     issuedAt: Date;
     issuedBy: string;

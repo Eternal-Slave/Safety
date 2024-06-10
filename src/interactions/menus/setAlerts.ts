@@ -1,5 +1,5 @@
 import { emojis } from '@/config';
-import { getGuild, updateGuild } from '@/store';
+import { getGuild, redis, updateGuild } from '@/store';
 import { ChSelectRun, Flags, IntInfo, IntType } from '@/types';
 import { ChannelTypes, Permissions } from 'oceanic.js';
 import { genConfigContent } from '../commands/config';
@@ -19,6 +19,7 @@ export const run: ChSelectRun = async (client, interaction) => {
     if (!channel.permissionsOf(client.user.id).has(...[Permissions.VIEW_CHANNEL, Permissions.SEND_MESSAGES]))
         return interaction.reply({ content: `${emojis.error} I don't have permission to send messages in ${channel.mention}, please check my permissions.` });
 
+    await redis.sadd(`es_safety_subscriptions`, interaction.guildID!);
     guild = await updateGuild(interaction.guildID!, { $set: { 'safety.alerts': channelId } });
     await interaction.editOriginal({ content: `${emojis.success} Set the safety alerts channel to ${channel.mention}.` });
     await client.rest.channels.editMessage(interaction.channelID, interaction.data.customID.split(':').at(-1)!, {

@@ -67,4 +67,3 @@ export const updateGuild = async (guildId: string, query: UpdateQuery<GuildI>) =
     await redis.set(`es_guild:${guildId}`, JSON.stringify(guild.toObject(), replacer));
     return guild.toObject();
 };
-
