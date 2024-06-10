@@ -462,6 +462,7 @@ __metadata:
     dotenv: "npm:^16.4.5"
     ioredis: "npm:^5.4.1"
     mongoose: "npm:^8.4.1"
+    oceanic-collectors: "npm:^1.0.7"
     oceanic.js: "npm:^1.10.4"
     tsc-alias: "npm:^1.8.10"
     typescript: "npm:^5.4.5"
@@ -1074,6 +1075,13 @@ __metadata:
   version: 3.0.0
   resolution: "normalize-path@npm:3.0.0"
   checksum: 10c0/e008c8142bcc335b5e38cf0d63cfd39d6cf2d97480af9abdbe9a439221fd4d749763bab492a8ee708ce7a194bb00c9da6d0a115018672310850489137b3da046
+  languageName: node
+  linkType: hard
+
+"oceanic-collectors@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "oceanic-collectors@npm:1.0.7"
+  checksum: 10c0/52194c26c1a25adcc0dcbd1443132015f646da29b996afad9db25da2d39917392ba58d8c4bc22e47df2f1167fdedf036c818bfc73a17608512ba13d8a0f5f70c
   languageName: node
   linkType: hard
 

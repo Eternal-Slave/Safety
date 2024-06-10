@@ -56,8 +56,8 @@ export const updateProfile = async (userId: string, query: UpdateQuery<SafetyPro
         .then(async () => await SafetyProfile.findByIdAndUpdate(userId, query, { new: true }));
     
     if (!profile) throw new Error('The specified safety profile does not exist.');
-    if (profile.flags.size < 1 && profile.restrictions.size < 1) return profile.toObject();
-    await redis.set(`es_safety:${userId}`, JSON.stringify(profile.toObject(), replacer));
+    if (profile.flags.size < 1 && profile.restrictions.size < 1) await redis.del(`es_safety:${userId}`);
+    else await redis.set(`es_safety:${userId}`, JSON.stringify(profile.toObject(), replacer));
     return profile.toObject();
 };
 
