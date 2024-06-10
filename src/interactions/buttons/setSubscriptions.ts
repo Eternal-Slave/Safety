@@ -8,13 +8,12 @@ export const run: ButtonRun = async (client, interaction) => {
 
     const row = stringSelectRow([{
         minValues: 1,
-        maxValues: 4,
+        maxValues: 3,
         placeholder: 'Select some alert subscriptions below.',
         customID: `select.gctl.safety.subscriptions:${interaction.message.id}`,
         options: [
             { label: 'Full/Total Restrictions', value: 'full' },
             { label: 'BDSM Restrictions', value: 'bdsm' },
-            { label: 'Report Restrictions', value: 'report' },
             { label: 'User Flags', value: 'flags' }
         ]
     }]);

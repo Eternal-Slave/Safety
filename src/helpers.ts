@@ -2,7 +2,7 @@ import { capitalCase } from 'change-case';
 import { randomInt } from 'node:crypto';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Permissions } from 'oceanic.js';
+import { JSONUser, Permissions, User } from 'oceanic.js';
 
 export const defaultPerms: bigint[] = [
     Permissions.EMBED_LINKS,
@@ -13,6 +13,7 @@ export const defaultPerms: bigint[] = [
 export const sanitize = (string: string) => string.replaceAll('_', '\_');
 export const getDir = (path: string): string => dirname(fileURLToPath(path));
 export const capitalize = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
+export const getAuthority = (level?: number) => level === 5 ? 'ES Safety' : level && level > 5 ? 'ES Team' : 'Unknown';
 export const getPermNames = (perms: bigint[]) => perms.map((perm) => capitalCase(Object.entries(Permissions).filter((v) => v[1] === BigInt(perm))[0][0])).join(', ');
 
 export const truncateString = (string?: string, length = 2000) => {
@@ -39,4 +40,10 @@ export function genDbId(length: 4 | 6 | 8 | 10 | 12) { switch (length) {
     case 8: return randomInt(11111111, 99999999);
     case 10: return randomInt(1111111111, 9999999999);
     case 12: return randomInt(111111111111, 999999999999);
+}};
+
+// prettier-ignore
+export const name = (user: User|JSONUser, type: 1|2 = 1) => { switch (type) {
+	case 1: return user.globalName ? `${user.globalName} (${user.username})` : user.username;
+	case 2: return `${user.username} (${user.id})`;
 }};
