@@ -3,15 +3,21 @@
 
 import { Schema, model } from 'mongoose';
 
+interface Safety {
+    alerts?: string;
+    autoBan: boolean;
+    mentions: string[];
+    subscriptions: string[];
+}
+
 export interface GuildI {
     _id: number;
     guild: string;
-    safety: {
-        alerts?: string;
-        autoBan: boolean;
-        mentions: string[];
-        subscriptions: string[];
-    };
+    safety: Safety;
+}
+
+export interface SimpleGuild extends Safety {
+    id: string;
 }
 
 // prettier-ignore
