@@ -28,14 +28,6 @@ export const buttonRow = (data: BtnData[]): MessageActionRow => ({
 	} as URLButton | TextButton))
 });
 
-export const stringSelectRow = (data: Omit<StringSelectMenu, 'type'>[]): MessageActionRow => ({
-    type: ComponentTypes.ACTION_ROW,
-    components: data.map((select) => ({
-        ...select,
-        type: ComponentTypes.STRING_SELECT
-    }))
-});
-
 export const selectRow = (data: MessageComponent[]): MessageActionRow => ({
 	type: ComponentTypes.ACTION_ROW,
 	components: data
