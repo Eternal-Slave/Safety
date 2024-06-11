@@ -20,7 +20,7 @@ export const run: ButtonRun = async (client, interaction) => {
     await redis.srem(`es_config:safety_subscriptions`, interaction.guildID!);
     const guild = await updateGuild(interaction.guildID!, {
         $unset: { 'safety.alerts': '' },
-        $set: { 'safety.autoBan': false, 'safety.mentions': [], 'safety.subscriptions': [] }
+        $set: { 'safety.autoBan': [], 'safety.mentions': [], 'safety.subscriptions': [] }
     });
 
     await int.editParent({ content: `${emojis.success} Cleared ${interaction.guild?.name}'s safety config.`, components: [] });

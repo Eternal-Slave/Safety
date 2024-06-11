@@ -13,7 +13,7 @@ export const defaultPerms: bigint[] = [
 export const sanitize = (string: string) => string.replaceAll('_', '\_');
 export const getDir = (path: string): string => dirname(fileURLToPath(path));
 export const capitalize = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
-export const getAuthority = (level?: number) => level === 5 ? 'ES Safety' : level && level > 5 ? 'ES Team' : 'Unknown';
+export const getAuthority = (level?: number) => level === 5 ? 'ES Safety' : level && level > 5 ? 'ES Team' : null;
 export const getPermNames = (perms: bigint[]) => perms.map((perm) => capitalCase(Object.entries(Permissions).filter((v) => v[1] === BigInt(perm))[0][0])).join(', ');
 
 export const truncateString = (string?: string, length = 2000) => {

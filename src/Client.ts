@@ -17,7 +17,7 @@ export default class Client extends OceanicClient {
 
 
     public trustedGuilds = new Collection<string, string>([
-        ['1136148842715303946', 'ES Community'], ['1222281807022657546', 'We are Degenerates']
+        ['1222281807022657546', 'We are Degenerates']
     ]);
 
     public getUser = async (userId: string) => {
