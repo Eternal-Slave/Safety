@@ -12,9 +12,9 @@ export const run: ButtonRun = async (client, interaction) => {
         placeholder: 'Select some alert subscriptions below.',
         customID: `select.gctl.safety.subscriptions:${interaction.message.id}`,
         options: [
-            { label: 'Full/Total Restrictions', value: 'full' },
-            { label: 'BDSM Restrictions', value: 'bdsm' },
-            { label: 'User Flags', value: 'flags' }
+            { label: 'Restrictions', value: 'restrictions' },
+            { label: 'User Flags', value: 'flags' },
+            { label: 'User Warns', value: 'warns' }
         ]
     }]);
 
