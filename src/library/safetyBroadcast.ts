@@ -42,7 +42,8 @@ export default async (client: Client, interaction: ChatInputCommandInteraction, 
         if (!channel || channel.type !== ChannelTypes.GUILD_TEXT || !channel.permissionsOf(client.user.id).has(...defaultPerms)) return;
         const mentions = subscription.safety.mentions.length > 0 ? subscription.safety.mentions.map((r) => `<@&${r}>`).join(', ') : undefined;
         await channel.createMessage({ embeds: [embed], content: mentions ? `${mentions},` : undefined });
-        if (subscription.safety.autoBan) await client.rest.guilds.createBan(guild.id, target.id, { reason: 'Automated Action: ES Safety Auto-Ban' });
+        if (subscription.safety.autoBan.includes((info.type + 's')))
+            await client.rest.guilds.createBan(guild.id, target.id, { reason: 'Automated Action: ES Safety Auto-Ban' });
     };
 
     const next = async (index: number) => {

@@ -5,7 +5,7 @@ import { Schema, model } from 'mongoose';
 
 interface Safety {
     alerts?: string;
-    autoBan: boolean;
+    autoBan: string[];
     mentions: string[];
     subscriptions: string[];
 }
@@ -26,7 +26,7 @@ const guildSchema = new Schema<GuildI>({
     guild: { required: true, type: String },
     safety: {
         alerts: { required: false, type: String },
-        autoBan: { required: true, type: Boolean, default: false },
+        autoBan: { required: true, type: [String], default: false },
         mentions: { required: true, type: [String], default: [] },
         subscriptions: { required: true, type: [String], default: [] }
     }
