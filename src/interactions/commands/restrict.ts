@@ -16,7 +16,7 @@ export const run: ChatCmdRun = async (client, interaction) => {
 
     const confirmTxt = `Are you sure you want to ${undo ? `remove \`${type}\` from` : `add \`${type}\` to`} ${displayName}'s restrictions?`;
     const { int, success } = await confirmPrompt(interaction, confirmTxt, { time: 60000, noEdit: true });
-    if (!success) return int.editParent({ content: `${emojis.cancel} Okay, cancelled restriction.`, components: [] });
+    if (!success) return int.editParent({ content: `${emojis.cancel} Okay, restriction cancelled.`, components: [] });
     await int.editParent({ content: `${emojis.loading} Updating restrictions for ${displayName}...`, components: [] });
 
     if (undo) await updateProfile(user.id, { $unset: { [`restrictions.${type}`]: {} } });
