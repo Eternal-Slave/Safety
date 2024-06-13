@@ -6,7 +6,7 @@ import confirmPrompt from '@/structures/confirmPrompt';
 import { ChatCmdRun, CmdInfo, OptType } from '@/types';
 
 export const run: ChatCmdRun = async (client, interaction) => {
-    const infraction = await validateInfraction(client, interaction);
+    const infraction = await validateInfraction(client, interaction, true);
     if (!infraction.valid) return interaction.reply({ content: infraction.message });
 
     const user = interaction.data.options.getUser('user', true);

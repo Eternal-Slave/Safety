@@ -25,7 +25,7 @@ dayjs.updateLocale('en', { relativeTime: { ...dayjs.Ls.en.relativeTime, s: '%d s
 
 const client = new Client({
     auth: `Bot ${process.env.APP_TOKEN}`,
-    gateway: { intents: 47, maxShards: 'auto' },
+    gateway: { intents: 4111, maxShards: 'auto' },
     allowedMentions: { users: true, roles: true, repliedUser: true },
     collectionLimits: { auditLogEntries: 0, stickers: 0, integrations: 0, groupChannels: 0, scheduledEvents: 0, autoModerationRules: 0 }
 });

@@ -47,6 +47,7 @@ export const run: ChatCmdRun = async (client, interaction) => {
 
 export const info: CmdInfo = {
     name: 'config',
+    cooldown: 15,
     contexts: [0],
     integrationTypes: [0],
     defaultMemberPermissions: Permissions.MANAGE_GUILD,
