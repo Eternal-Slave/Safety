@@ -1,4 +1,5 @@
 import { capitalCase } from 'change-case';
+import dayjs from 'dayjs';
 import { randomInt } from 'node:crypto';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -10,11 +11,16 @@ export const defaultPerms: bigint[] = [
     Permissions.USE_EXTERNAL_EMOJIS
 ];
 
-export const sanitize = (string: string) => string.replaceAll('_', '\_');
-export const getDir = (path: string): string => dirname(fileURLToPath(path));
+export const getDir = (path: string) => dirname(fileURLToPath(path));
 export const capitalize = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
+export const formatDate = (date: Date|null) => dayjs.utc(date).tz('Etc/UTC').format('MMMM Do, YYYY @ HH:mm');
 export const getAuthority = (level?: number) => level === 5 ? 'ES Safety' : level && level > 5 ? 'ES Team' : null;
 export const getPermNames = (perms: bigint[]) => perms.map((perm) => capitalCase(Object.entries(Permissions).filter((v) => v[1] === BigInt(perm))[0][0])).join(', ');
+
+export const sanitize = (string: string) => {
+	return string.replace(/(?<!`)`(?!`)/g, "\\`")
+	.replace(/(<a?:[^\s:]+:\d+>|```[\s\S]*?```|_)/g, (str) => (str.match(/<a?:[^\s:]+:\d+>/g) || str.match(/```[\s\S]*?```/g)) ? str : str.replace(/_/g, '\\_'));
+};
 
 export const truncateString = (string?: string, length = 2000) => {
 	if (!string) return '';
