@@ -4,9 +4,10 @@ import { capitalize, defaultPerms, formatDate, name } from '@/helpers';
 import { GuildI } from '@/models/Guild';
 import { Infraction } from '@/models/SafetyProfile';
 import { getGuild, redis } from '@/store';
+import { buttonRow } from '@/structures/component';
 import createEmbed from '@/structures/createEmbed';
 import { ChatInputCommandInteraction } from '@/types';
-import { ChannelTypes, Permissions, User } from 'oceanic.js';
+import { ButtonStyles, ChannelTypes, Permissions, User } from 'oceanic.js';
 
 interface Info extends Infraction {
     id?: string;
@@ -38,7 +39,14 @@ export default async (client: Client, interaction: ChatInputCommandInteraction, 
         const channel = guild.channels.get(subscription.safety.alerts!);
         if (!channel || channel.type !== ChannelTypes.GUILD_TEXT || !channel.permissionsOf(client.user.id).has(...defaultPerms)) return;
         const mentions = subscription.safety.mentions.length > 0 ? subscription.safety.mentions.map((r) => `<@&${r}>`).join(', ') : undefined;
-        await channel.createMessage({ embeds: [embed], content: mentions ? `${mentions},` : undefined });
+
+        let row = null;
+        if (!undo) {
+            const isBanned = await client.rest.guilds.getBan(guild.id, target.id).catch(() => {});
+            row = buttonRow([ { label: 'Ban User', style: ButtonStyles.DANGER, id: `btn.alert.ban:${target.id}`, disabled: !!isBanned } ]);
+        };
+
+        await channel.createMessage({ embeds: [embed], content: mentions ? `${mentions},` : undefined, components: row ? [row] : [] });
         if (!undo && subscription.safety.autoBan.includes((info.type + 's')) && channel.permissionsOf(client.user.id).has(Permissions.BAN_MEMBERS))
             await client.rest.guilds.createBan(guild.id, target.id, { reason: 'Automated Action: ES Safety Auto-Ban' });
     };

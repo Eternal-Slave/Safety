@@ -26,7 +26,7 @@ const guildSchema = new Schema<GuildI>({
     guild: { required: true, type: String },
     safety: {
         alerts: { required: false, type: String },
-        autoBan: { required: true, type: [String], default: false },
+        autoBan: { required: true, type: [String], default: [] },
         mentions: { required: true, type: [String], default: [] },
         subscriptions: { required: true, type: [String], default: [] }
     }
