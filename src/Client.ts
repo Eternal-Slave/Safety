@@ -1,5 +1,5 @@
 import { Collection } from '@discordjs/collection';
-import { Member, Message, Client as OceanicClient, User } from 'oceanic.js';
+import { Member, Client as OceanicClient, User } from 'oceanic.js';
 import Command from './interfaces/Command';
 import { Interaction } from './types';
 import lang, { LangKeys } from './lang';
